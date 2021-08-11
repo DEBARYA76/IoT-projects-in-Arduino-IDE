@@ -1,0 +1,35 @@
+#include <ESP8266WiFi.h>;
+#include <WiFiClient.h>;
+#include <ThingSpeak.h>;
+const char* ssid = "Redmi";
+const char* password = "12345678";
+WiFiClient client;
+unsigned long myChannelNumber = 1280044;
+
+const char * myReadAPIKey = "NWZKHMHU0DY9I4NI";
+int led_1;
+int led2 = D1;
+
+
+int statusCode;
+void setup() {
+  Serial.begin(115200);
+  pinMode(led2,OUTPUT);
+  WiFi.begin(ssid, password);
+  ThingSpeak.begin(client);
+}
+void loop() {
+  
+ 
+ led_1 = ThingSpeak.readIntField(myChannelNumber, 1, myReadAPIKey);
+Serial.println(led_1);
+if(led_1<200)
+{
+digitalWrite(led2,HIGH);
+}
+else
+{
+digitalWrite(led2,LOW);
+}
+  delay(1000);
+}
